@@ -1,26 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Navigate, Route, Routes} from 'react-router-dom';
+import './styles/App.css';
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home";
+import Registration from "./pages/Registration";
+import Login from "./pages/Login";
+import PageNotFound from "./pages/PageNotFound";
+import "./styles/fonts.css";
+import Test from "./pages/Test";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+
+                    <Route path="/registration" element={
+                        localStorage.getItem("access") === null
+                            ? <Registration />
+                            : <Navigate to="/" replace />
+                    } />
+
+                    <Route path="/login" element={
+                        localStorage.getItem("access") === null
+                            ? <Login />
+                            : <Navigate to="/" replace />
+                    } />
+
+                    <Route path="/test" element={
+                        localStorage.getItem("access") === null
+                            ? <Navigate to="/login" replace />
+                            : <Test />
+                    } />
+
+                    <Route path="*" element={<PageNotFound />} />
+                </Routes>
+            </Layout>
+        </BrowserRouter>
+    );
 }
 
 export default App;

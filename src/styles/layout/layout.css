@@ -1,0 +1,226 @@
+body {
+    background-color: var(--secondary-color);
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    z-index: 100;
+    padding: 10px 2%;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #090907;
+}
+
+footer {
+    width: 100%;
+    padding-left: 1%;
+    padding-right: 1%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-flow: row;
+}
+
+.select_header {
+    display: none;
+}
+
+.menu_and_logo {
+    display: flex;
+    flex-flow: row;
+}
+
+.menu_header {
+    display: none;
+    width: 50px;
+    height: 50px;
+    font-size: 35px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
+.links_container_header, .links_container_footer {
+    display: flex;
+    justify-content: space-between;
+    width: 53%;
+}
+
+.link_header_footer {
+    text-decoration: none;
+    color: black;
+    font-size: 0.95rem;
+}
+
+.header_footer_buttons {
+    display: flex;
+    justify-content: right;
+}
+
+.logo_and_button .header_footer_buttons {
+    display: none;
+}
+
+.registration_button {
+    height: 40px;
+    width: 150px;
+    border-radius: 6px;
+    border: #fff 2px solid;
+    background: #fff;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    margin-right: 10px;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+.footer_button {
+    height: 40px;
+    width: 150px;
+    border-radius: 6px;
+    border: #343f52 2px solid;
+    background: none;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #343f52;
+}
+
+.login_button {
+    height: 40px;
+    width: 150px;
+    border-radius: 6px;
+    border: var(--primary-color) 2px solid;
+    background: var(--primary-color);
+    color: white;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+}
+.menu_header_block {
+    background-color: var(--primary-color);
+    width: 28px;
+    height: 3px;
+    position: absolute;
+    left: 25px;
+    transition: .25s ease-in-out;
+    z-index: 2;
+
+}
+.menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: #ffffff;
+    opacity: 1;
+    margin-right: auto;
+    z-index: 1;
+}
+.menu_ul {
+    text-align: center;
+    margin-top: 150px;
+    padding-left: 0;
+}
+.menu_li {
+    list-style-type: none;
+    margin: 20px auto;
+}
+.menu_li_link {
+    line-height: 1.17;
+    color: #3d3d3d;
+    font-size: 24px;
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 1340px) {
+    .links_container_header {
+        display: none;
+    }
+    .menu_header {
+        display: initial;
+    }
+}
+
+@media screen and (max-width: 920px) {
+    .logo_and_button .header_footer_buttons {
+        display: initial;
+    }
+    footer .header_footer_buttons {
+        display: none;
+    }
+    .logo_and_button {
+        display: flex;
+        justify-content: space-between;
+        width: 95%;
+    }
+    footer {
+        flex-flow: column;
+        padding-bottom: 50px;
+    }
+    .links_container_footer {
+        width: 600px;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .header_footer_buttons {
+        flex-flow: column;
+        justify-content: space-between;
+    }
+    .registration_button, .login_button {
+        height: 30px;
+        width: 140px;
+        font-size: 0.8rem;
+    }
+    .login_button {
+        margin-top: 5px;
+    }
+    .links_container_footer {
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .registration_button, .login_button {
+        height: 25px;
+        width: 100px;
+        font-size: 0.7rem;
+    }
+    .registration_button {
+        font-size: 0.57rem;
+    }
+    .links_container_footer {
+        flex-flow: column;
+        margin-left: 55px;
+    }
+    .links_container_footer .link_header_footer {
+        margin-bottom: 10px;
+    }
+    .logo_and_button .header_footer_buttons {
+        display: none;
+    }
+    footer .header_footer_buttons {
+        margin-left: 55px;
+        margin-bottom: 20px;
+        display: initial;
+    }
+    footer {
+        align-items: flex-start;
+    }
+    .links_container_footer {
+        width: 50%;
+    }
+    .footer_button {
+        height: 35px;
+        width: 135px;
+    }
+}

@@ -1,0 +1,227 @@
+.home_block {
+    padding-top: 100px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.home_title {
+    font-size: 35px;
+    margin-bottom: 5px;
+    font-family: 'Gotham Pro', Arial, sans-serif;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-align: center;
+    letter-spacing: normal;
+}
+
+.home_desc {
+    font-size: 20px;
+    margin-bottom: 11px;
+    font-family: 'Gotham Pro', sans-serif;
+    font-weight: 200;
+    color: #FFFFFF;
+    text-align: center;
+    letter-spacing: normal;
+}
+
+.games_picker {
+    display: flex;
+    justify-content: space-evenly;
+    flex-flow: row;
+    margin: 40px auto 0;
+    width: 65%;
+}
+.game_block {
+    display: flex;
+    flex-flow: column;
+    width: 50%;
+    align-items: center;
+}
+
+.game_img {
+    background: #1B1821;
+    border: 1px solid var(--primary-color);
+    box-sizing: border-box;
+    box-shadow: 0 6px 53px 16px #03effe17;
+    border-radius: 10px;
+    position: relative;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 50%;
+    height: 350px;
+}
+.select_calculator {
+    width: 50%;
+    margin-top: 20px;
+}
+
+.game_pick_button {
+    height: 50px;
+    width: 300px;
+    border-radius: 6px;
+    background: var(--primary-color);
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+    margin-top: 30px;
+}
+
+.paired_game {
+    width: 869px;
+    padding: 20px;
+    display: flex;
+    background: #1B1821;
+    box-shadow: 0 6px 53px 16px #03effe17;
+    border-radius: 10px;
+    margin-bottom: 50px;
+}
+
+.paired_game_img_block {
+    width: 293px;
+    height: 440px;
+    display: flex;
+    background: #000000;
+    box-sizing: border-box;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.paired_game_img {
+    width: 100%;
+    height: 100%;
+}
+.paired_game_content {
+    display: flex;
+    flex-direction: column;
+    padding-left: 30px;
+    width: 700px;
+}
+.paired_game_title {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Gotham Pro, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 28px;
+    line-height: 27px;
+    color: #fff;
+}
+.paired_game_year_rating {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Gotham Pro, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 26px;
+    color: var(--primary-color);
+    margin-top: 20px;
+}
+.dot {
+    padding-inline: 10px;
+}
+.genre_title {
+    padding-inline: 5px;
+    padding: 0;
+    color: #7a7a7a;
+    margin-top: 15px;
+}
+.genre_item {
+    padding-inline: 5px;
+    padding: 0 0 0 5px;
+    color: #fff;
+    font-weight: 200;
+}
+.paired_game_story {
+    font-family: Gotham Pro, sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 26px;
+    color: #fff;
+    margin-top: 20px;
+    overflow: hidden;
+    display: -webkit-box;
+}
+.swiper_games {
+    width: 80%;
+}
+@media (min-width: 1600px) {
+    .paired_game {
+        width: 600px;
+        padding: 15px;
+    }
+    .paired_game_img_block {
+        width: 250px;
+        height: 375px;
+    }
+    .paired_game_content {
+        width: 550px;
+        padding-left: 20px;
+    }
+}
+
+@media (max-width: 1250px) {
+    .paired_game {
+        width: 600px;
+    }
+    .paired_game_title {
+        font-size: 20px;
+    }
+    .paired_game_year_rating, .paired_game_story, .genre_title {
+        font-size: 14px;
+    }
+    .paired_game_year_rating, .genre_title {
+        margin-top: 5px;
+    }
+    .paired_game_content {
+        padding: 15px;
+    }
+    .paired_game_img_block {
+        width: 250px;
+        height: 375px;
+    }
+    .games_picker {
+        width: 80%;
+    }
+}
+
+@media (max-width: 900px) {
+    .paired_game {
+        width: 80%;
+    }
+    .paired_game_title {
+        font-size: 20px;
+    }
+    .paired_game_year_rating, .paired_game_story, .genre_title {
+        font-size: 14px;
+    }
+    .paired_game_year_rating, .genre_title {
+        margin-top: 5px;
+    }
+    .paired_game_content {
+        width: 100%;
+    }
+    .paired_game_img_block {
+        display: none;
+    }
+    .swiper_games {
+        width: 95%;
+    }
+    .games_picker {
+        width: 100%;
+    }
+    .game_img, .select_calculator {
+        width: 90%;
+    }
+    .home_title {
+        font-size: 20px;
+    }
+    .home_desc {
+        font-size: 15px;
+    }
+}
