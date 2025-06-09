@@ -62,7 +62,8 @@ const Header: React.FC<HeaderProps> = () => {
 
             {localStorage.getItem("access") !== null &&
               <div className="header_footer_buttons">
-                <button className="login_button" onClick={logout}>Выйти из аккаунта</button>
+                <button className="login_button" onClick={logout}
+                style={{height: 40}}>Выйти из аккаунта</button>
               </div>
             }
         </header>

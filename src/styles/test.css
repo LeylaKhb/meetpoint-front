@@ -1,0 +1,75 @@
+/* styles/test.css */
+.test-container {
+    height: 90vh;
+    padding: 20px;
+    background-color: #1E1A28;
+    color: #E2E0E5;
+}
+
+.test-form-container {
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #2A2438;
+    margin: 60px auto 40px;
+}
+
+.test-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.test-subtitle {
+    font-size: 14px;
+    color: white;
+    margin-bottom: 24px;
+    text-align: center;
+    line-height: 1.5;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.test-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #C9C5D0;
+    font-size: 14px;
+}
+
+.test-select-container {
+    margin-bottom: 20px;
+}
+
+.test-submit-button {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 16px;
+    transition: background-color 0.2s;
+}
+
+.test-submit-button:hover {
+    background-color: #5D35E0;
+}
+
+@media (max-width: 768px) {
+    .select__placeholder {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .select__placeholder {
+        font-size: 12px;
+    }
+}
