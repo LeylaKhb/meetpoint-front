@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import "./styles/fonts.css";
 import Test from "./pages/Test";
+import Meetings from "./pages/Meetings";
 
 function App() {
     return (
@@ -33,6 +34,8 @@ function App() {
                             ? <Navigate to="/login" replace />
                             : <Test />
                     } />
+
+                    <Route path="/meetings" element={ <Meetings/> } />
 
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
