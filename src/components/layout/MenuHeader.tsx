@@ -25,7 +25,7 @@ const MenuHeader: React.FC<MenuHeaderProps> = ({handleMenuLinks}) => {
         <div className="menu">
             <ul role="list" className="menu_ul" onClick={handleMenuLinks}>
                 <li className="menu_li">
-                    <a className="menu_li_link" href="/">Подобрать игру</a></li>
+                    <a className="menu_li_link" href="/">Главная</a></li>
                 {localStorage.getItem("access") === null &&
                   <>
                     <li className="menu_li">

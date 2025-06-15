@@ -10,37 +10,55 @@ import "./styles/fonts.css";
 import Test from "./pages/Test";
 import Meetings from "./pages/Meetings";
 import MeetingDetails from "./pages/MeetingDetails";
+import PersonalAccount from "./pages/PersonalAccount";
+import CurrentMeetings from "./pages/CurrentMeetings";
+import MeetingsHistory from "./pages/MeetingsHistory";
 
 function App() {
     return (
         <BrowserRouter>
             <Layout>
                 <Routes>
-                    <Route path="/" element={<Home />} />
+                    <Route path="/" element={<Home/>}/>
 
                     <Route path="/registration" element={
                         localStorage.getItem("access") === null
-                            ? <Registration />
-                            : <Navigate to="/" replace />
-                    } />
+                            ? <Registration/>
+                            : <Navigate to="/" replace/>
+                    }/>
 
                     <Route path="/login" element={
                         localStorage.getItem("access") === null
-                            ? <Login />
-                            : <Navigate to="/" replace />
-                    } />
+                            ? <Login/>
+                            : <Navigate to="/" replace/>
+                    }/>
 
                     <Route path="/test" element={
                         localStorage.getItem("access") === null
-                            ? <Navigate to="/login" replace />
-                            : <Test />
-                    } />
+                            ? <Navigate to="/login" replace/>
+                            : <Test/>
+                    }/>
+                    <Route path="/personal_account" element={
+                        localStorage.getItem("access") === null
+                            ? <Navigate to="/login" replace/>
+                            : <PersonalAccount/>
+                    }/>
+                    <Route path="/current_meetings" element={
+                        localStorage.getItem("access") === null
+                            ? <Navigate to="/login" replace/>
+                            : <CurrentMeetings/>
+                    }/>
+                    <Route path="/meetings_history" element={
+                        localStorage.getItem("access") === null
+                            ? <Navigate to="/login" replace/>
+                            : <MeetingsHistory/>
+                    }/>
 
                     <Route path="/meetings" element={ <Meetings/> } />
 
                     <Route path="/meeting" element={ <MeetingDetails /> } />
 
-                    <Route path="*" element={<PageNotFound />} />
+                    <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
             </Layout>
         </BrowserRouter>

@@ -23,4 +23,4 @@ export class Meeting {
         this.location = location;
         this.rating = rating;
     }
-};
+}
