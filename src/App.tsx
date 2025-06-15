@@ -9,6 +9,7 @@ import PageNotFound from "./pages/PageNotFound";
 import "./styles/fonts.css";
 import Test from "./pages/Test";
 import Meetings from "./pages/Meetings";
+import MeetingDetails from "./pages/MeetingDetails";
 
 function App() {
     return (
@@ -36,6 +37,8 @@ function App() {
                     } />
 
                     <Route path="/meetings" element={ <Meetings/> } />
+
+                    <Route path="/meeting" element={ <MeetingDetails /> } />
 
                     <Route path="*" element={<PageNotFound />} />
                 </Routes>
