@@ -6,12 +6,7 @@ import {Meeting} from "../models/Meeting";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-interface FetchOptions extends RequestInit {
-    headers?: HeadersInit;
-}
-
 const Home: React.FC<{}> = () => {
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [meetings, setMeetings] = useState<Meeting[]>([]);
 
     useEffect(() => {
