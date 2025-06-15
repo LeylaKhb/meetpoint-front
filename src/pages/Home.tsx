@@ -44,7 +44,7 @@ const Home: React.FC<{}> = () => {
 
             <div className="home_block">
                 <div className="home-container">
-                    <h1 className="home-title">Добро пожаловать</h1>
+                    <h1 className="home_title">Добро пожаловать</h1>
                     <MeetingsGrid meetings={meetings}/>
                 </div>
             </div>

@@ -94,10 +94,12 @@ const Test: React.FC = () => {
                 if (!tagsResponse.ok) {
                     throw new Error('Не удалось загрузить теги');
                 }
-                const tagsData: Tag[] = await tagsResponse.json();
 
-                const groupedTags = tagsData.reduce<TagCategories>((acc, tag) => {
-                    const category = tag.category.toLowerCase();
+                const responseData: { tags: Tag[] } = await tagsResponse.json();
+                const tagsData = responseData.tags.filter(tag => tag.type.toLowerCase() !== "default");;
+
+                const groupedTags = tagsData.reduce((acc, tag) => {
+                    const category = tag.type.toLowerCase();
                     const option = {
                         value: tag.id.toString(),
                         label: tag.name
@@ -109,7 +111,7 @@ const Test: React.FC = () => {
 
                     acc[category].push(option);
                     return acc;
-                }, {});
+                }, {} as TagCategories);
 
                 setTagOptions(groupedTags);
 
