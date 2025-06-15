@@ -8,6 +8,8 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import "./styles/fonts.css";
 import Test from "./pages/Test";
+import Meetings from "./pages/Meetings";
+import MeetingDetails from "./pages/MeetingDetails";
 import PersonalAccount from "./pages/PersonalAccount";
 import CurrentMeetings from "./pages/CurrentMeetings";
 import MeetingsHistory from "./pages/MeetingsHistory";
@@ -51,6 +53,10 @@ function App() {
                             ? <Navigate to="/login" replace/>
                             : <MeetingsHistory/>
                     }/>
+
+                    <Route path="/meetings" element={ <Meetings/> } />
+
+                    <Route path="/meeting" element={ <MeetingDetails /> } />
 
                     <Route path="*" element={<PageNotFound/>}/>
                 </Routes>
