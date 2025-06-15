@@ -1,10 +1,16 @@
 import React from "react";
 import "../styles/popup.css"
 import {Link} from "react-router-dom";
+import {Person} from "../models/Person";
+import ChangePasswordForm from "./forms/ChangePasswordForm";
+import ProfileChangeForm from "./forms/ProfileChangeForm";
 
 interface PopupProps {
     isVisible: boolean,
     setVisibleFalse: any;
+    content: string;
+    openSecondPopup?: any;
+    person?: Person;
 }
 
 interface PopupState {
@@ -37,18 +43,40 @@ class Popup extends React.Component<PopupProps, PopupState> {
                  onClick={(e) => {
                      this.handleClose(e)
                  }}>
-                <div className="popup_window" style={{
-                    opacity: this.props.isVisible ? 1 : 0,
-                    transform: "translateY(-50%)", alignItems: 'center', justifyContent: 'center', display: "flex",
-                    flexFlow: 'column'
-                }}>
+                {this.props.content === "login" &&
+                  <div className="popup_window" style={{
+                      opacity: this.props.isVisible ? 1 : 0,
+                      transform: "translateY(-50%)", alignItems: 'center', justifyContent: 'center', display: "flex",
+                      flexFlow: 'column'
+                  }}>
                     <div className="schedule_login_text">
-                        Пожалуйста войдите в личный кабинет
+                      Пожалуйста войдите в личный кабинет
                     </div>
                     <Link to="/login">
-                        <button className="login_schedule">Войти</button>
+                      <button className="login_schedule">Войти</button>
                     </Link>
-                </div>
+                  </div>
+                }
+
+                {this.props.content === "change_password" &&
+                  <div className="popup_window" style={{
+                      opacity: this.props.isVisible ? 1 : 0,
+                      transform: "translateY(-50%)", padding: '40px 51px',
+                  }}>
+                    <ChangePasswordForm/>
+                  </div>
+                }
+                {this.props.content === "profile" &&
+                  <div className="popup_window popup_window_profile" style={{
+                      opacity: this.props.isVisible ? 1 : 0,
+                      transform: "translateY(-50%)"
+                  }}>
+                      {this.props.person !== undefined &&
+                        <ProfileChangeForm person={this.props.person} key={this.state.key}
+                                           openSecondPopup={this.props.openSecondPopup}/>
+                      }
+                  </div>
+                }
 
                 <div className="popup_cross" onClick={this.props.setVisibleFalse}>
                     <svg role="presentation" className="t-popup__close-icon" width="23px" height="23px"

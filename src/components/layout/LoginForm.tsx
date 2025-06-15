@@ -93,21 +93,21 @@ const LoginForm: React.FC<LoginFormProps> = ({location}) => {
             .then(function (response) {
                 return response.json().then(function (data) {
                     if (response.ok) {
-                        localStorage.setItem("access", data.access);
-                        localStorage.setItem("refresh", data.refresh);
+                        localStorage.setItem("access", data.accessToken);
+                        localStorage.setItem("refresh", data.refreshToken);
                         window.location.assign(appUrl + (location === "registration" ? '/test' : ''));
                     } else {
                         let errorMessage = "Ошибка входа или регистрации";
-
-                        if (data.detail) {
-                            errorMessage = data.detail;
-                        } else if (data.non_field_errors && data.non_field_errors.length > 0) {
-                            errorMessage = data.non_field_errors[0];
-                        } else {
-                            const firstKey = Object.keys(data)[0];
-                            if (firstKey && Array.isArray(data[firstKey])) {
-                                errorMessage = data[firstKey][0];
-                            }
+                        switch (response.status) {
+                            case 400:
+                                errorMessage = "Некорректные данные запроса";
+                                break;
+                            case 401:
+                                errorMessage = "Неверные учетные данные";
+                                break;
+                            case 409:
+                                errorMessage = "Пользователь с таким email уже существует";
+                                break;
                         }
 
                         setPasswordError(errorMessage);
@@ -116,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({location}) => {
             })
             .catch(function (error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
-                throw error;
+                setPasswordError("Ошибка сети или сервера");
             });
     }
 

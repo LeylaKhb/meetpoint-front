@@ -1,13 +1,12 @@
 import React from "react";
 import {Helmet, HelmetProvider} from 'react-helmet-async';
-import "../styles/home.css";
 
-const Home: React.FC<{}> = () => {
+const CurrentMeetings: React.FC<{}> = () => {
     return (
         <div style={{width: '100%'}}>
             <HelmetProvider>
                 <Helmet
-                    title="Главная"
+                    title="Текущие мероприятия"
                 />
             </HelmetProvider>
             <div className="home_block">
@@ -16,5 +15,5 @@ const Home: React.FC<{}> = () => {
     )
 }
 
-export default Home;
+export default CurrentMeetings;
 

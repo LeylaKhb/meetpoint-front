@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import {Helmet, HelmetProvider} from 'react-helmet-async';
 import Select from 'react-select';
 import "../styles/test.css";
 import {Tag} from "../models/Tag";
+import {fetchWithAuthRetry} from "../components/auth";
 
 interface OptionType {
     value: string;
@@ -16,52 +17,65 @@ interface TagCategories {
 const apiUrl = process.env.REACT_APP_API_URL;
 const mockTagOptions: TagCategories = {
     sport: [
-        { value: '1', label: 'Футбол' },
-        { value: '2', label: 'Баскетбол' },
-        { value: '3', label: 'Теннис' },
-        { value: '4', label: 'Плавание' },
-        { value: '5', label: 'Бег' },
+        {value: '1', label: 'Футбол'},
+        {value: '2', label: 'Баскетбол'},
+        {value: '3', label: 'Теннис'},
+        {value: '4', label: 'Плавание'},
+        {value: '5', label: 'Бег'},
     ],
     food: [
-        { value: '6', label: 'Итальянская' },
-        { value: '7', label: 'Японская' },
-        { value: '8', label: 'Мексиканская' },
-        { value: '9', label: 'Вегетарианская' },
-        { value: '10', label: 'Фастфуд' },
+        {value: '6', label: 'Итальянская'},
+        {value: '7', label: 'Японская'},
+        {value: '8', label: 'Мексиканская'},
+        {value: '9', label: 'Вегетарианская'},
+        {value: '10', label: 'Фастфуд'},
     ],
     music: [
-        { value: '11', label: 'Рок' },
-        { value: '12', label: 'Поп' },
-        { value: '13', label: 'Хип-хоп' },
-        { value: '14', label: 'Электронная' },
-        { value: '15', label: 'Джаз' },
+        {value: '11', label: 'Рок'},
+        {value: '12', label: 'Поп'},
+        {value: '13', label: 'Хип-хоп'},
+        {value: '14', label: 'Электронная'},
+        {value: '15', label: 'Джаз'},
     ],
     culture: [
-        { value: '16', label: 'Театр' },
-        { value: '17', label: 'Музеи' },
-        { value: '18', label: 'Выставки' },
-        { value: '19', label: 'Концерты' },
-        { value: '20', label: 'Фестивали' },
+        {value: '16', label: 'Театр'},
+        {value: '17', label: 'Музеи'},
+        {value: '18', label: 'Выставки'},
+        {value: '19', label: 'Концерты'},
+        {value: '20', label: 'Фестивали'},
     ],
     movie: [
-        { value: '21', label: 'Боевики' },
-        { value: '22', label: 'Комедии' },
-        { value: '23', label: 'Драмы' },
-        { value: '24', label: 'Фантастика' },
-        { value: '25', label: 'Триллеры' },
+        {value: '21', label: 'Боевики'},
+        {value: '22', label: 'Комедии'},
+        {value: '23', label: 'Драмы'},
+        {value: '24', label: 'Фантастика'},
+        {value: '25', label: 'Триллеры'},
     ],
     profession: [
-        { value: '26', label: 'IT' },
-        { value: '27', label: 'Медицина' },
-        { value: '28', label: 'Образование' },
-        { value: '29', label: 'Маркетинг' },
-        { value: '30', label: 'Финансы' },
+        {value: '26', label: 'IT'},
+        {value: '27', label: 'Медицина'},
+        {value: '28', label: 'Образование'},
+        {value: '29', label: 'Маркетинг'},
+        {value: '30', label: 'Финансы'},
     ]
 };
 
+const mockMyTags = {
+    sport: [{value: '3', label: 'Теннис'}],
+    food: [{value: '8', label: 'Мексиканская'}, {value: '10', label: 'Фастфуд'}],
+    music: [{value: '14', label: 'Электронная'}],
+    culture: [
+        {value: '19', label: 'Концерты'},
+    ],
+    movie: [
+        {value: '21', label: 'Боевики'},
+        {value: '22', label: 'Комедии'},
+    ],
+    profession: [
+        {value: '26', label: 'IT'},
+    ]
+}
 const Test: React.FC = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [error, setError] = useState<string | null>(null);
     const [tagOptions, setTagOptions] = useState<TagCategories>({});
 
     const [selected, setSelected] = useState<TagCategories>({
@@ -74,15 +88,15 @@ const Test: React.FC = () => {
     });
 
     useEffect(() => {
-        const fetchTags = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch(`${apiUrl}/tags`);
-                if (!response.ok) {
+                const tagsResponse = await fetch(`${apiUrl}/tags`);
+                if (!tagsResponse.ok) {
                     throw new Error('Не удалось загрузить теги');
                 }
-                const data: Tag[] = await response.json();
+                const tagsData: Tag[] = await tagsResponse.json();
 
-                const groupedTags = data.reduce<TagCategories>((acc, tag) => {
+                const groupedTags = tagsData.reduce<TagCategories>((acc, tag) => {
                     const category = tag.category.toLowerCase();
                     const option = {
                         value: tag.id.toString(),
@@ -98,32 +112,49 @@ const Test: React.FC = () => {
                 }, {});
 
                 setTagOptions(groupedTags);
-                setIsLoading(false);
+
+                const accessToken = localStorage.getItem("access");
+                if (accessToken) {
+                    const testResponse = await fetchWithAuthRetry(`${apiUrl}/test`, {
+                        headers: {
+                            'Authorization': `Bearer ${accessToken}`
+                        }
+                    });
+
+                    if (testResponse.ok) {
+                        const testData = await testResponse.json();
+                        console.log('Test data:', testData);
+                    }
+                }
             } catch (err) {
-                setError(err instanceof Error ? err.message : 'Произошла неизвестная ошибка');
-                setIsLoading(false);
+                console.error('Ошибка при загрузке данных:', err);
                 setTagOptions(mockTagOptions);
+                if (localStorage.getItem("access")) {
+                    setSelected(mockMyTags);
+                }
             }
         };
 
-        fetchTags();
+        fetchData();
     }, []);
 
     const handleChange = (name: keyof typeof selected) => (newValue: any) => {
-        setSelected(prev => ({ ...prev, [name]: newValue }));
+        setSelected(prev => ({...prev, [name]: newValue}));
     };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         try {
-            const response = await fetch(`${apiUrl}/user/preferences`, {
+            const response = await fetchWithAuthRetry(`${apiUrl}/sheet`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    preferences: selected
+                    interestsIds: Object.values(selected)
+                        .flat()
+                        .map(item => item.value)
                 }),
             });
 
@@ -134,8 +165,8 @@ const Test: React.FC = () => {
             console.log('Предпочтения успешно сохранены');
         } catch (err) {
             console.error('Ошибка при сохранении предпочтений:', err);
-            setError(err instanceof Error ? err.message : 'Произошла неизвестная ошибка');
         }
+        window.location.assign("/personal_account")
     };
 
     const customStyles = {
@@ -196,7 +227,7 @@ const Test: React.FC = () => {
     return (
         <div className="test-container">
             <HelmetProvider>
-                <Helmet title="Тест" />
+                <Helmet title="Тест"/>
             </HelmetProvider>
 
             <div className="test-form-container">
@@ -204,7 +235,8 @@ const Test: React.FC = () => {
                     Выберите свои предпочтения
                 </h2>
                 <p className="test-subtitle">
-                    Отметьте то, что вам нравится. Можно выбрать несколько вариантов или пропустить, если ничего не подходит.
+                    Отметьте то, что вам нравится. Можно выбрать несколько вариантов или пропустить, если ничего не
+                    подходит.
                 </p>
 
                 <form onSubmit={handleSubmit}>

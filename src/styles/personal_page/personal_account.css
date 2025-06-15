@@ -1,0 +1,53 @@
+.personal_account_div {
+    padding-top: 120px;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 3%;
+    margin-right: 3%;
+}
+.personal_info_div {
+    display: flex;
+    flex-flow: column;
+    margin-left: 20px;
+    margin-top: 10px;
+    color: white;
+}
+.personal_info {
+    margin-top: 3px;
+    font-size: 20px;
+}
+.personal_change_info {
+    border: 2px solid var(--primary-color);
+    background: none;
+    border-radius: 6px;
+    height: 35px;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+}
+.personal_logout_button {
+    height: 35px;
+    margin-top: 10px;
+    border-radius: 6px;
+    background-color: var(--primary-color);
+    border: none;
+    color: white;
+}
+.personal_orders_links {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 40px;
+}
+.person_order_button {
+    color: white;
+    font-size: 30px;
+    text-align: center;
+}
+.person_order_link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
