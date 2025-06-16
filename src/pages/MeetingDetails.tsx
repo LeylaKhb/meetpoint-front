@@ -21,12 +21,22 @@ const MeetingDetails: React.FC<MeetingDetailsProps> = (props) => {
     const params = new URLSearchParams(location.search);
     const meetingId = params.get('meetingId');
 
-    console.log("props.isPast", props.isPast);
     const isPast = props.isPast ?? state?.isPast ?? false;
-    console.log(isPast);
     const isUpcoming = props.isUpcoming ?? state?.isUpcoming ?? false;
 
     const isAuthenticated = Boolean(localStorage.getItem('access'));
+
+    function createRecord() {
+        fetch(apiUrl + '/meeting', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem("access"),
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ meetingId: meeting?.id })
+        });
+    }
 
     const renderActionButton = () => {
         if (isPast) {
@@ -47,7 +57,9 @@ const MeetingDetails: React.FC<MeetingDetailsProps> = (props) => {
 
         if (!isPast && !isUpcoming && isAuthenticated) {
             return (
-                <button className="meeting-details-join-button">
+                <button
+                    onClick={createRecord}
+                    className="meeting-details-join-button">
                     Записаться на мероприятие
                 </button>
             );

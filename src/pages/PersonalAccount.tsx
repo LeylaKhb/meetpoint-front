@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import Popup from "../components/Popup";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import {fetchWithAuthRetry} from "../components/auth";
+import meetings from "./Meetings";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -148,7 +149,7 @@ class PersonalAccount extends React.Component<PersonalAccountProps, PersonalAcco
                 <div className="personal_orders_links">
                     <Link
                         to="/current_meetings"
-                        state={{ meetings: mockMeetings }}
+                        state={{ meetings: person.nextMeetings }}
                         className="person_order_link"
                         style={backgroundImage}>
                         <div className="person_order_button">Текущие мероприятия</div>
