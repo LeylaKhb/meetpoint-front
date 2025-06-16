@@ -4,6 +4,8 @@ import "../../styles/personal_page/profile_change_form.css";
 import Form from "../forms/Form";
 import DatePicker from "react-datepicker";
 import moment from "moment-timezone";
+import userPhoto from "../../static/user-profile.jpg";
+import {fetchWithAuthRetry} from "../auth";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -26,8 +28,10 @@ const ProfileChangeForm: React.FC<ProfileChangeFormProps> = ({person, openSecond
 
     useEffect(() => {
         setEmailText(person.email);
-        setNameText(person.name === undefined ? "" : person.name)
-    }, [person.email, person.name])
+        setNameText(person.name  ?? "");
+        setSurnameText(person.surname ?? "")
+        setBirthdate(person.birthdate ?? new Date())
+    }, [person.email, person.name, person.surname, person.birthdate])
 
     function checkEmail() {
         if(!(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+$/.test(emailText))) {
@@ -45,21 +49,28 @@ const ProfileChangeForm: React.FC<ProfileChangeFormProps> = ({person, openSecond
         return true;
     }
 
+    function checksSurname() {
+        if (surnameText.length === 0) {
+            setSurnameValid(false);
+            return false;
+        }
+        return true;
+    }
+
     function handleChanges() {
-        let email = checkEmail();
-        let name = checkName();
-        if (!name || !email) {
+        if (!checkEmail() || !checkName() || !checksSurname()) {
             return;
         }
+        if (birthdate == null) return;
+        const person = new Person(emailText, '', birthdate, nameText, surnameText)
 
-        fetch(`${apiUrl}/profile`, {
+        fetchWithAuthRetry(`${apiUrl}/profile`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
-                'Authorization' : 'Bearer ' + localStorage.getItem("jwt")
             },
-            body: JSON.stringify(new Person(nameText, emailText))
+            body: JSON.stringify(person)
         }).then(function (resp) {
             resp.json()
                 .then(function (data) {
@@ -106,7 +117,8 @@ const ProfileChangeForm: React.FC<ProfileChangeFormProps> = ({person, openSecond
             <label style={{fontWeight: 600}}>Изменить профиль</label>
             <form className="change_profile_form">
                 <div className="change_photo_div">
-                    <img style={{borderRadius: '100%', width: 100, height: 100}}  src={person.photoUrl} alt="user profile" />
+                    <img src={person.photoUrl == "" ? userPhoto : person.photoUrl} style={{borderRadius: '100%', width: 100, height: 100}}
+                         alt="user profile"/>
                     <div className="input_wrapper">
                         <input type="file" className="change_photo_input" id="change_photo_input" accept="image/*"/>
                         <label htmlFor="change_photo_input" className="input_file_button">
@@ -119,7 +131,7 @@ const ProfileChangeForm: React.FC<ProfileChangeFormProps> = ({person, openSecond
                 <Form handleInput={handleSurnameInput} error={surnameValid ? "" : "Поле не может быть пустым"} text={surnameText}
                       label="Фамилия" name="surname" defaultValue={person.surname}/>
                 <Form handleInput={handleEmailInput} error={emailError} text={emailText} label="Email" name="email"
-                defaultValue={person.email}/>
+                      defaultValue={person.email}/>
                 <DatePicker
                     selected={person.birthdate}
                     onChange={(date) => setBirthdate(date)}

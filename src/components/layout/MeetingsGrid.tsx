@@ -39,7 +39,7 @@ const MeetingsGrid: React.FC<Props> = ({ meetings, isPast, isUpcoming }) => {
                             onClick={() => navigate(`/meeting?meetingId=${meeting.id}`, {
                                 state: { isPast, isUpcoming }
                             })}
-                            style={{ backgroundImage: `url(${meeting.photoUrl})` }}
+                            style={{ backgroundImage: `url(${meeting.photoUrl})`, cursor: "pointer" }}
                         >
                             <div className="meeting-overlay">
                                 <div className="meeting-summary">

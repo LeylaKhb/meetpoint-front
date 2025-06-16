@@ -18,8 +18,8 @@ const TagFilter: React.FC<Props> = ({ onChange }) => {
     useEffect(() => {
         const fetchTags = async () => {
             const res = await fetch(`${apiUrl}/tags`);
-            const data = await res.json();
-            const tags: Tag[] = data.tags;
+            const data: { tags: Tag[] } = await res.json();
+            const tags: Tag[] = data.tags.filter(tag => tag.type.toLowerCase() !== "default");
 
             const grouped: Record<string, TagOption[]> = {};
             tags.forEach(tag => {

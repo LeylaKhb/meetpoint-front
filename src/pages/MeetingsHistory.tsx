@@ -17,11 +17,12 @@ const MeetingsHistory: React.FC<{}> = () => {
             </HelmetProvider>
             <div className="home_block">
                 <div className="home-container">
-                    <h1 className="home_title">Текущие мероприятия</h1>
+                    <h1 className="home_title">История мероприятий</h1>
+                    {meetings.length === 0 &&
+                      <div className="home_title" style={{fontSize: 20, fontWeight: 400}}>Вы пока не посетили ни одного мероприятия</div>}
                     <MeetingsGrid
                         isPast={true}
                         meetings={meetings}
-
                     />
                 </div>
             </div>

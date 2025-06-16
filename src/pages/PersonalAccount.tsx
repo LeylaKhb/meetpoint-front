@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import Popup from "../components/Popup";
 import {Helmet, HelmetProvider} from "react-helmet-async";
 import {fetchWithAuthRetry} from "../components/auth";
-import meetings from "./Meetings";
+import userPhoto from "../static/user-profile.jpg";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -112,7 +112,7 @@ class PersonalAccount extends React.Component<PersonalAccountProps, PersonalAcco
                 </HelmetProvider>
                 <div className="personal_account_div">
                     <div style={{display: 'flex', flexFlow: 'row'}}>
-                        <img src={person.photoUrl} style={{borderRadius: '100%', width: 100, height: 100}}
+                        <img src={person.photoUrl == "" ? userPhoto : person.photoUrl} style={{borderRadius: '100%', width: 100, height: 100}}
                              alt="user profile"/>
                         <div className="personal_info_div">
                             <div className="personal_info">{person.name + " " + person.surname}</div>
@@ -136,7 +136,7 @@ class PersonalAccount extends React.Component<PersonalAccountProps, PersonalAcco
                                 }}>{person.rating === undefined ? "5.0" : person.rating.toFixed(1)}</span>
                             </div>
                             <Link to="/test">
-                            <button className="personal_change_info" style={{marginTop: 6}}>Пройти тест</button>
+                                <button className="personal_change_info" style={{marginTop: 6}}>Пройти тест</button>
                             </Link>
                         </div>
                     </div>
@@ -185,5 +185,4 @@ const mockMeetings = [
         tags: ["Театр"],
     },
 ];
-
 export default PersonalAccount;

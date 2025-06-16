@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import '../styles/meeting-details.css';
 import star from "../static/star_fill_1.svg";
 import {Meeting} from "../models/Meeting";
+import {fetchWithAuthRetry} from "../components/auth";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -27,14 +28,15 @@ const MeetingDetails: React.FC<MeetingDetailsProps> = (props) => {
     const isAuthenticated = Boolean(localStorage.getItem('access'));
 
     function createRecord() {
-        fetch(apiUrl + '/meeting', {
+        fetchWithAuthRetry(apiUrl + '/meeting', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem("access"),
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ meetingId: meeting?.id })
+        }).then(() => {
+            window.location.assign("/personal_account")
         });
     }
 
