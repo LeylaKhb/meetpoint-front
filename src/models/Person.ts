@@ -11,7 +11,7 @@ export class Person {
     leftMeetings?: Meeting[];
     nextMeetings?: Meeting[];
 
-    constructor(email: string, password: string, birthdate?: Date, name?: string, surname?: string,
+    constructor(email: string, password: string = '', birthdate?: Date, name?: string, surname?: string,
                 photoUrl? : string, rating?: number, leftMeetings?: Meeting[], nextMeetings?: Meeting[],) {
         this.email = email;
         this.password = password;
@@ -23,6 +23,7 @@ export class Person {
         this.leftMeetings = leftMeetings;
         this.nextMeetings = nextMeetings;
     }
+
 
     static createMockPerson(): Person {
         return new Person(

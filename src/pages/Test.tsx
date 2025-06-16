@@ -60,21 +60,6 @@ const mockTagOptions: TagCategories = {
     ]
 };
 
-const mockMyTags = {
-    sport: [{value: '3', label: 'Теннис'}],
-    food: [{value: '8', label: 'Мексиканская'}, {value: '10', label: 'Фастфуд'}],
-    music: [{value: '14', label: 'Электронная'}],
-    culture: [
-        {value: '19', label: 'Концерты'},
-    ],
-    movie: [
-        {value: '21', label: 'Боевики'},
-        {value: '22', label: 'Комедии'},
-    ],
-    profession: [
-        {value: '26', label: 'IT'},
-    ]
-}
 const Test: React.FC = () => {
     const [tagOptions, setTagOptions] = useState<TagCategories>({});
 
@@ -96,7 +81,7 @@ const Test: React.FC = () => {
                 }
 
                 const responseData: { tags: Tag[] } = await tagsResponse.json();
-                const tagsData = responseData.tags.filter(tag => tag.type.toLowerCase() !== "default");;
+                const tagsData = responseData.tags.filter(tag => tag.type.toLowerCase() !== "default");
 
                 const groupedTags = tagsData.reduce((acc, tag) => {
                     const category = tag.type.toLowerCase();
@@ -114,26 +99,9 @@ const Test: React.FC = () => {
                 }, {} as TagCategories);
 
                 setTagOptions(groupedTags);
-
-                const accessToken = localStorage.getItem("access");
-                if (accessToken) {
-                    const testResponse = await fetchWithAuthRetry(`${apiUrl}/test`, {
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`
-                        }
-                    });
-
-                    if (testResponse.ok) {
-                        const testData = await testResponse.json();
-                        console.log('Test data:', testData);
-                    }
-                }
             } catch (err) {
                 console.error('Ошибка при загрузке данных:', err);
                 setTagOptions(mockTagOptions);
-                if (localStorage.getItem("access")) {
-                    setSelected(mockMyTags);
-                }
             }
         };
 

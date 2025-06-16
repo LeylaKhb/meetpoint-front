@@ -10,7 +10,6 @@ const ITEMS_PER_PAGE = 12;
 
 const MeetingsGrid: React.FC<Props> = ({ meetings }) => {
     const [currentPage, setCurrentPage] = React.useState(1);
-    const navigate = useNavigate();
 
     const totalPages = Math.ceil(meetings.length / ITEMS_PER_PAGE);
     const currentMeetings = meetings.slice(
@@ -31,10 +30,10 @@ const MeetingsGrid: React.FC<Props> = ({ meetings }) => {
                     const timeStr = dateObj.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
                     return (
-                        <div
+                        <a
                             key={meeting.id}
                             className="meeting-card"
-                            onClick={() => navigate(`/meeting?meetingId=${meeting.id}`)}
+                            href={`/meeting?meetingId=${meeting.id}`}
                             style={{ backgroundImage: `url(${meeting.photoUrl})` }}
                         >
                             <div className="meeting-overlay">
@@ -50,7 +49,7 @@ const MeetingsGrid: React.FC<Props> = ({ meetings }) => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     );
                 })}
             </div>
