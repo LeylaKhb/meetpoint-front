@@ -146,10 +146,18 @@ class PersonalAccount extends React.Component<PersonalAccountProps, PersonalAcco
                 </div>
 
                 <div className="personal_orders_links">
-                    <Link to="/current_meetings" className="person_order_link" style={backgroundImage}>
+                    <Link
+                        to="/current_meetings"
+                        state={{ meetings: mockMeetings }}
+                        className="person_order_link"
+                        style={backgroundImage}>
                         <div className="person_order_button">Текущие мероприятия</div>
                     </Link>
-                    <Link to="/meetings_history" className="person_order_link" style={backgroundImage}>
+                    <Link
+                        to="/meetings_history"
+                        state={{ meetings: mockMeetings }}
+                        className="person_order_link"
+                        style={backgroundImage}>
                         <div className="person_order_button">История мероприятий</div>
                     </Link>
                 </div>
@@ -161,5 +169,20 @@ class PersonalAccount extends React.Component<PersonalAccountProps, PersonalAcco
         )
     }
 }
+
+const mockMeetings = [
+    {
+        id: "1",
+        name: "Вечер современного театра",
+        description: "Встреча любителей театрального искусства для обсуждения новых постановок и совместного посещения спектаклей в театрах Казани.",
+        datetime: '2025-06-20T19:00:00Z',
+        photoUrl: "https://images.unsplash.com/photo-1503095396549-807759245b35?w=600",
+        location: "ул. Петербургская, 57, Казань (у входа в Татарский государственный академический театр)",
+        rating: 5.0,
+        membersCount: 1,
+        maxMembers: 12,
+        tags: ["Театр"],
+    },
+];
 
 export default PersonalAccount;

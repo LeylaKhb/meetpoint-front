@@ -6,14 +6,55 @@ import {Meeting} from "../models/Meeting";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const MeetingDetails: React.FC = () => {
+interface MeetingDetailsProps {
+    isPast?: boolean;
+    isUpcoming?: boolean;
+}
+
+const MeetingDetails: React.FC<MeetingDetailsProps> = (props) => {
     const location = useLocation();
+    const state = location.state as { isPast?: boolean; isUpcoming?: boolean } | null;
     const [meeting, setMeeting] = useState<Meeting | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     const params = new URLSearchParams(location.search);
     const meetingId = params.get('meetingId');
+
+    console.log("props.isPast", props.isPast);
+    const isPast = props.isPast ?? state?.isPast ?? false;
+    console.log(isPast);
+    const isUpcoming = props.isUpcoming ?? state?.isUpcoming ?? false;
+
+    const isAuthenticated = Boolean(localStorage.getItem('access'));
+
+    const renderActionButton = () => {
+        if (isPast) {
+            return (
+                <button className="meeting-details-join-button">
+                    Оставить отзыв
+                </button>
+            );
+        }
+
+        if (isUpcoming) {
+            return (
+                <button className="meeting-details-join-button">
+                    Отменить запись
+                </button>
+            );
+        }
+
+        if (!isPast && !isUpcoming && isAuthenticated) {
+            return (
+                <button className="meeting-details-join-button">
+                    Записаться на мероприятие
+                </button>
+            );
+        }
+
+        return null;
+    };
 
     useEffect(() => {
         const fetchMeetingDetails = async () => {
@@ -85,9 +126,7 @@ const MeetingDetails: React.FC = () => {
                     <b>Описание: </b>{meeting.description}
                 </p>
 
-                <button className="meeting-details-join-button">
-                    Записаться на мероприятие
-                </button>
+                {renderActionButton()}
             </div>
         </div>
     );

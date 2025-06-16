@@ -4,11 +4,13 @@ import { Meeting } from "../../models/Meeting";
 
 interface Props {
     meetings: Meeting[];
+    isPast?: boolean;
+    isUpcoming?: boolean;
 }
 
 const ITEMS_PER_PAGE = 12;
 
-const MeetingsGrid: React.FC<Props> = ({ meetings }) => {
+const MeetingsGrid: React.FC<Props> = ({ meetings, isPast, isUpcoming }) => {
     const [currentPage, setCurrentPage] = React.useState(1);
     const navigate = useNavigate();
 
@@ -34,7 +36,9 @@ const MeetingsGrid: React.FC<Props> = ({ meetings }) => {
                         <div
                             key={meeting.id}
                             className="meeting-card"
-                            onClick={() => navigate(`/meeting?meetingId=${meeting.id}`)}
+                            onClick={() => navigate(`/meeting?meetingId=${meeting.id}`, {
+                                state: { isPast, isUpcoming }
+                            })}
                             style={{ backgroundImage: `url(${meeting.photoUrl})` }}
                         >
                             <div className="meeting-overlay">
